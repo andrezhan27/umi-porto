@@ -1,10 +1,11 @@
 import { restaurant } from "../app/restaurant";
 
-type IconName = "arrow-up-right" | "arrow-down" | "pin" | "clock" | "phone" | "at-sign" | "menu" | "close" | "calendar";
+type IconName = "arrow-up-right" | "arrow-down" | "chevron-down" | "pin" | "clock" | "phone" | "at-sign" | "menu" | "close" | "calendar";
 
 const strokes: Record<IconName, React.ReactNode> = {
   "arrow-up-right": <><path d="M6 18 18 6M8 6h10v10" /></>,
   "arrow-down": <path d="M12 4v15m-6-6 6 6 6-6" />,
+  "chevron-down": <path d="m6 9 6 6 6-6" />,
   pin: <><path d="M19 10c0 5-7 10-7 10S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.3" /></>,
   clock: <><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3 2" /></>,
   phone: <path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a13 13 0 0 1-7-7l2-2-2-5Z" />,
@@ -35,11 +36,22 @@ export function Brand() {
   );
 }
 
-export function Photo({ name, alt, sizes, className = "" }: { name: string; alt: string; sizes: string; className?: string }) {
+export function Photo({ name, alt, sizes, className = "", width = 760, height = 500, mediumWidth, priority = false }: {
+  name: string;
+  alt: string;
+  sizes: string;
+  className?: string;
+  width?: number;
+  height?: number;
+  mediumWidth?: number;
+  priority?: boolean;
+}) {
+  const source = `/images/${name}`;
+  const medium = mediumWidth ? `, ${source}-medium.webp ${mediumWidth}w` : "";
   return (
     // Static responsive derivatives work on any host without an image optimizer.
     // eslint-disable-next-line @next/next/no-img-element
-    <img className={`photo ${className}`} src={`/images/${name}.webp`} srcSet={`/images/${name}-small.webp 420w, /images/${name}.webp 760w`} sizes={sizes} alt={alt} width={760} height={500} loading="lazy" decoding="async" draggable={false} />
+    <img className={`photo ${className}`} src={`${source}.webp`} srcSet={`${source}-small.webp 420w${medium}, ${source}.webp ${width}w`} sizes={sizes} alt={alt} width={width} height={height} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : undefined} decoding="async" draggable={false} />
   );
 }
 

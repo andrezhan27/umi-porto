@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useLanguage } from "./language";
 
 const autoplaySpeed = 0.032;
 const dragCoastTime = 230;
@@ -35,6 +36,7 @@ function releaseSpeed(samples: PointerSample[]) {
 }
 
 export function Carousel({ label, variant, children }: { label: string; variant: "dishes" | "reviews"; children: ReactNode }) {
+  const { copy: { carousel } } = useLanguage();
   const track = useRef<HTMLDivElement>(null);
   const strip = useRef<HTMLDivElement>(null);
   const originals = useRef<HTMLDivElement>(null);
@@ -187,18 +189,18 @@ export function Carousel({ label, variant, children }: { label: string; variant:
 
   return (
     <div className={`carousel carousel-${variant}`} role="region" aria-label={label}>
-      <div className="carousel-track" tabIndex={0} aria-label="Use the left and right arrow keys to browse" ref={track}>
+      <div className="carousel-track" tabIndex={0} aria-label={carousel.keys} ref={track}>
         <div className="carousel-strip" ref={strip}>
           <div className="carousel-set" ref={originals}>{children}</div>
           <div className="carousel-set" aria-hidden="true" inert>{children}</div>
         </div>
       </div>
       <div className="carousel-controls">
-        <span className="eyebrow">{variant === "dishes" ? "From the kitchen" : "From our guests"}</span>
+        <span className="eyebrow">{variant === "dishes" ? carousel.kitchen : carousel.guests}</span>
         <button type="button" className="carousel-motion" onClick={() => {
           autoplay.current = paused;
           setPaused(!paused);
-        }}>{paused ? "Play motion" : "Pause motion"}</button>
+        }}>{paused ? carousel.play : carousel.pause}</button>
       </div>
     </div>
   );

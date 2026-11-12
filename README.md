@@ -33,7 +33,8 @@ The draft uses `noindex` in `app/layout.tsx`. It can be viewed by anyone who can
 
 - Update business details, booking and menu destinations, listed prices, and reviews in `app/restaurant.ts`. An empty reviews array hides the review section and its navigation links. Set the rating to null to hide the badge.
 - Change the palette and typography in `app/globals.css`. The UMI logo assets live in `public/images/` and the favicon in `app/icon.png`.
-- Replace the WebP files in `public/images/` with approved venue and dish photography. Keep the responsive filenames or update the picture sources and alt text.
+- Venue images live in `public/images/space/` as `space-01.webp` through `space-05.webp`, with 420 px and 960 px variants. Update the gallery order and bilingual alt text in `app/restaurant.ts`.
+- Replace the draft dish WebPs in `public/images/` with approved dish photography. Keep the responsive filenames or update the image sources and alt text.
 - Booking currently opens a call-to-enquire dialog. Setting `bookingUrl` switches all booking buttons to the confirmed reservation link.
 - Replace the Glovo delivery-menu link with the approved dine-in menu and update the accompanying note. Confirm Wednesday, Thursday, and holiday hours with UMI.
 
@@ -44,8 +45,4 @@ The draft uses `noindex` in `app/layout.tsx`. It can be viewed by anyone who can
 
 ## Draft imagery
 
-Built-in ImageGen created the concept photos. The prompts called for three assets.
-
-1. A wide architectural photo inspired by the listing’s warm wood, ribbed amber pendant lights, curved beige chairs, plant alcoves, and rust-red napkins, photographed at dusk with room for the wordmark.
-2. Four views of the same concept dining room, covering a wide room view, pendant-light details, a ceramic place setting, and an intimate dining nook.
-3. Four editorial dish photos of a sushi selection, grilled dumplings, a crispy temaki cone, and a breaded cutlet chapa.
+The menu still uses ImageGen concept images of a sushi selection, grilled dumplings, a crispy temaki cone, and a breaded cutlet chapa.
