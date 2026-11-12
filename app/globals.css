@@ -394,7 +394,8 @@ section[tabindex="-1"]:focus { outline: none; }
   }
   .hero {
     min-height: calc(100vh - var(--header));
-    min-height: calc(100dvh - var(--header));
+    /* Keep the photo crop fixed as mobile browser toolbars move. */
+    min-height: calc(100svh - var(--header));
     grid-template-rows: 1fr auto;
   }
   .hero-image { object-position: 52% center; }
