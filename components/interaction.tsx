@@ -1,44 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { languages } from "../app/copy";
-import { navigation, restaurant } from "../app/restaurant";
+import { navigation } from "../app/restaurant";
 import { useLanguage } from "./language";
 import { Brand, Icon } from "./visuals";
 
-export function BookingButton({ className = "", onOpen }: { className?: string; onOpen?: () => void }) {
+export function BookingButton({ className = "", onClick }: { className?: string; onClick?: () => void }) {
   const { copy: { booking } } = useLanguage();
-  const classes = `button booking-button ${className}`;
-  if (restaurant.bookingUrl) return <a className={classes} href={restaurant.bookingUrl} onClick={onOpen}>{booking.action}</a>;
-
   return (
-    <button className={classes} type="button" aria-haspopup="dialog" onClick={() => {
-      onOpen?.();
-      const dialog = document.querySelector<HTMLDialogElement>("#booking");
-      if (dialog && !dialog.open) dialog.showModal();
-    }}>
+    <Link className={`button booking-button ${className}`} href="/reservation" onClick={onClick}>
       {booking.action}
-    </button>
-  );
-}
-
-export function BookingDialog() {
-  const { copy: { booking } } = useLanguage();
-  const ref = useRef<HTMLDialogElement>(null);
-
-  return (
-    <dialog ref={ref} id="booking" className="booking-dialog" aria-labelledby="booking-title" onClick={(event) => {
-      if (event.target === event.currentTarget) ref.current?.close();
-    }}>
-      <div className="booking-dialog-inner">
-        <button type="button" className="icon-button dialog-close" aria-label={booking.close} onClick={() => ref.current?.close()}><Icon name="close" /></button>
-        <Brand />
-        <h2 id="booking-title">{booking.action}</h2>
-        <p>{booking.description}</p>
-        <a className="button button-primary" href={restaurant.phoneHref}>{restaurant.phone}</a>
-        <p className="fine-print">{booking.note}</p>
-      </div>
-    </dialog>
+    </Link>
   );
 }
 
@@ -59,15 +33,18 @@ function LanguageSwitch() {
   );
 }
 
-export function Header() {
+export function Header({ onReservationPage = false }: { onReservationPage?: boolean }) {
   const { locale, copy } = useLanguage();
   const [active, setActive] = useState<string>("home");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const firstLink = useRef<HTMLAnchorElement>(null);
+  const sectionHref = (id: string) => `${onReservationPage ? "/" : ""}#${id}`;
+  const currentLocation = (id: string) => !onReservationPage && active === id ? "location" : undefined;
 
   useEffect(() => {
+    if (onReservationPage) return;
     let frame = 0;
     const sections = navigation.map((id) => document.getElementById(id));
 
@@ -94,7 +71,7 @@ export function Header() {
       window.removeEventListener("resize", update);
       cancelAnimationFrame(frame);
     };
-  }, [locale]);
+  }, [locale, onReservationPage]);
 
   useEffect(() => {
     if (!open) return;
@@ -110,7 +87,7 @@ export function Header() {
     }
 
     function closeOnEscape(event: globalThis.KeyboardEvent) {
-      if (event.key === "Escape" && !(event.target instanceof HTMLSelectElement) && !document.querySelector("#booking[open]")) {
+      if (event.key === "Escape" && !(event.target instanceof HTMLSelectElement)) {
         setOpen(false);
         trigger.current?.focus();
       }
@@ -128,15 +105,16 @@ export function Header() {
 
   return (
     <>
+      <a className="skip-link" href="#main">{copy.skip}</a>
       <header className="site-header" data-scrolled={scrolled} data-menu-open={open}>
         <div className="shell header-inner">
-          <a href="#home" className="brand-link" aria-label={copy.homeLink} onClick={() => setOpen(false)}><Brand /></a>
+          <a href={sectionHref("home")} className="brand-link" aria-label={copy.homeLink} onClick={() => setOpen(false)}><Brand /></a>
           <nav className="desktop-nav" aria-label={copy.mainNavigation}>
-            {navigation.map((id) => <a key={id} href={`#${id}`} aria-current={active === id ? "location" : undefined}>{copy.navigation[id]}</a>)}
+            {navigation.map((id) => <a key={id} href={sectionHref(id)} aria-current={currentLocation(id)}>{copy.navigation[id]}</a>)}
           </nav>
           <div className="header-actions">
             <LanguageSwitch />
-            <BookingButton className="button-outline header-booking" />
+            {!onReservationPage && <BookingButton className="button-outline header-booking" />}
             <button ref={trigger} type="button" className="icon-button menu-toggle" aria-label={open ? copy.closeNavigation : copy.openNavigation} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)}>
               <Icon name={open ? "close" : "menu"} size={25} />
             </button>
@@ -148,20 +126,22 @@ export function Header() {
             <ol>
               {navigation.map((id, index) => (
                 <li key={id}>
-                  <a ref={index === 0 ? firstLink : undefined} href={`#${id}`} aria-current={active === id ? "location" : undefined} onClick={() => {
+                  <a ref={index === 0 ? firstLink : undefined} href={sectionHref(id)} aria-current={currentLocation(id)} onClick={() => {
                     setOpen(false);
-                    requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }));
+                    if (!onReservationPage) {
+                      requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }));
+                    }
                   }}>
                     <span aria-hidden="true">0{index + 1}</span>{copy.navigation[id]}<Icon name="arrow-up-right" />
                   </a>
                 </li>
               ))}
             </ol>
-            <BookingButton className="button-primary" onOpen={() => { setOpen(false); trigger.current?.focus(); }} />
+            {!onReservationPage && <BookingButton className="button-primary" onClick={() => setOpen(false)} />}
           </div>
         </nav>
       </header>
-      {!open && <BookingButton className="button-primary floating-booking" />}
+      {!onReservationPage && !open && <BookingButton className="button-primary floating-booking" />}
     </>
   );
 }

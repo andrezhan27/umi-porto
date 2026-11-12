@@ -130,6 +130,15 @@ section[tabindex="-1"]:focus { outline: none; }
 .desktop-nav a[aria-current] { color: var(--color-rust); }
 .menu-toggle, .mobile-nav, .floating-booking { display: none; }
 
+.reservation { padding-top: var(--header); }
+.reservation iframe {
+  display: block;
+  width: 100%;
+  height: calc(100vh - var(--header));
+  height: calc(100dvh - var(--header));
+  border: 0;
+}
+
 .hero {
   position: relative;
   display: grid;
@@ -319,25 +328,6 @@ section[tabindex="-1"]:focus { outline: none; }
 .footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 18px; border-top: 1px solid #655044; color: #d0bfb0; font-size: 11px; }
 .footer-bottom a { text-decoration: underline; text-underline-offset: 3px; }
-
-.booking-dialog {
-  position: fixed;
-  inset: 0;
-  width: min(430px, calc(100% - 40px));
-  max-height: calc(100dvh - 40px);
-  margin: auto;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--color-paper);
-  color: var(--color-ink);
-}
-body:has(.booking-dialog[open]) { overflow: hidden; }
-.booking-dialog::backdrop { background: #22170db0; backdrop-filter: blur(4px); }
-.booking-dialog-inner { position: relative; display: grid; justify-items: start; gap: 16px; padding: clamp(25px, 6vw, 40px); }
-.booking-dialog h2 { font-size: 35px; font-weight: 550; letter-spacing: -.065em; line-height: 1; }
-.booking-dialog p { color: var(--color-muted); }
-.dialog-close { position: absolute; top: 12px; right: 12px; }
-.dialog-close:hover { background: var(--color-wash); }
 
 @keyframes reveal { from { opacity: .45; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .reveal-in { animation: reveal .52s var(--reveal-delay, 0ms) both; }

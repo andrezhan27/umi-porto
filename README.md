@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). To check and preview the production export:
+Open [localhost:3000](http://localhost:3000) to preview the site, including the booking links. To check and preview the production export:
 
 ```sh
 npm run typecheck
@@ -19,7 +19,7 @@ npm run build
 python3 -m http.server 4173 --bind 127.0.0.1 --directory out
 ```
 
-Open [localhost:4173](http://localhost:4173) to preview the static files from `out/`.
+Open [localhost:4173](http://localhost:4173) to preview the static files from `out/`. Python serves the reservation export at `/reservation.html`. Vercel serves it at `/reservation`.
 
 ## Deploy to Vercel
 
@@ -35,7 +35,7 @@ The draft uses `noindex` in `app/layout.tsx`. It can be viewed by anyone who can
 - Change the palette and typography in `app/globals.css`. The UMI logo assets live in `public/images/` and the favicon in `app/icon.png`.
 - Venue images live in `public/images/space/` as `space-01.webp` through `space-05.webp`, with 420 px and 960 px variants. Update the gallery order and bilingual alt text in `app/restaurant.ts`.
 - Replace the draft dish WebPs in `public/images/` with approved dish photography. Keep the responsive filenames or update the image sources and alt text.
-- Booking currently opens a call-to-enquire dialog. Setting `bookingUrl` switches all booking buttons to the confirmed reservation link.
+- Booking buttons open `/reservation`, which embeds the widget configured in `bookingUrl`.
 - Replace the Glovo delivery-menu link with the approved dine-in menu and update the accompanying note. Confirm Wednesday, Thursday, and holiday hours with UMI.
 
 ## Sources

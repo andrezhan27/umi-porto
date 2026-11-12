@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { copy, defaultLocale, languages, type Locale } from "../app/copy";
 
@@ -8,6 +9,7 @@ const LanguageContext = createContext({ locale: defaultLocale, setLocale: (_loca
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, updateLocale] = useState<Locale>(defaultLocale);
+  const pathname = usePathname();
 
   useEffect(() => {
     try {
@@ -20,8 +22,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = languages[locale].tag;
-    document.title = copy[locale].pageTitle;
-  }, [locale]);
+    document.title = pathname === "/reservation" ? copy[locale].booking.title : copy[locale].pageTitle;
+  }, [locale, pathname]);
 
   function setLocale(next: Locale) {
     updateLocale(next);

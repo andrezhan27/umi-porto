@@ -1,7 +1,7 @@
 "use client";
 
 import { Carousel } from "../components/carousel";
-import { BookingButton, BookingDialog, Header, Reveals } from "../components/interaction";
+import { BookingButton, Header, Reveals } from "../components/interaction";
 import { useLanguage } from "../components/language";
 import { Brand, Icon, Photo, Seal, SectionHeading } from "../components/visuals";
 import { dishes, navigation, restaurant, reviews, selections, spacePhotoDimensions, spacePhotos } from "./restaurant";
@@ -129,6 +129,10 @@ function Visit() {
                 {restaurant.socialLinks.map(({ label, url }) => <a key={url} href={url}>{label} <Icon name="arrow-up-right" size={14} /></a>)}
               </dd>
             </div>
+            <div>
+              <dt><Icon name="truck" /> {visit.delivery}</dt>
+              <dd><a href={restaurant.deliveryUrl}>{visit.orderDelivery} <Icon name="arrow-up-right" size={14} /></a></dd>
+            </div>
           </dl>
           <div className="visit-actions"><BookingButton className="button-primary" /><a href={restaurant.directionsUrl} className="text-link">{visit.directions} <Icon name="arrow-up-right" size={15} /></a></div>
         </div>
@@ -201,11 +205,8 @@ function Footer() {
 }
 
 export default function Home() {
-  const { copy } = useLanguage();
-
   return (
     <>
-      <a className="skip-link" href="#main">{copy.skip}</a>
       <Header />
       <main id="main" tabIndex={-1}>
         <Hero />
@@ -216,7 +217,6 @@ export default function Home() {
         <Reviews />
       </main>
       <Footer />
-      <BookingDialog />
       <Reveals />
     </>
   );

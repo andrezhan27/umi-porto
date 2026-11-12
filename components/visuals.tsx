@@ -1,6 +1,6 @@
 import { restaurant } from "../app/restaurant";
 
-type IconName = "arrow-up-right" | "arrow-down" | "chevron-down" | "pin" | "clock" | "phone" | "at-sign" | "menu" | "close" | "calendar";
+type IconName = "arrow-up-right" | "arrow-down" | "chevron-down" | "pin" | "clock" | "phone" | "at-sign" | "truck" | "menu" | "close" | "calendar";
 
 const strokes: Record<IconName, React.ReactNode> = {
   "arrow-up-right": <><path d="M6 18 18 6M8 6h10v10" /></>,
@@ -10,6 +10,7 @@ const strokes: Record<IconName, React.ReactNode> = {
   clock: <><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3 2" /></>,
   phone: <path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a13 13 0 0 1-7-7l2-2-2-5Z" />,
   "at-sign": <><circle cx="12" cy="12" r="4" /><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" /></>,
+  truck: <><path d="M5 17H3V5h12v12H9m6-9h4l3 4v5h-2m-4 0h-1" /><circle cx="7" cy="17" r="2" /><circle cx="18" cy="17" r="2" /></>,
   menu: <path d="M4 8h16M4 16h16" />,
   close: <path d="m6 6 12 12M18 6 6 18" />,
   calendar: <><rect x="4" y="6" width="16" height="14" rx="2" /><path d="M8 4v4m8-4v4M4 11h16" /></>,

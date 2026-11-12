@@ -21,9 +21,7 @@ const english = {
   homeLink: "UMI home",
   booking: {
     action: "Book a Table",
-    close: "Close booking",
-    description: "Call UMI to ask about a table and confirm availability.",
-    note: "Online booking link pending.",
+    title: "Reservations at UMI",
   },
   hero: {
     cuisine: "Sushi & Asian kitchen",
@@ -53,6 +51,8 @@ const english = {
     hoursNote: "Call to confirm Wednesday, Thursday, and holiday hours.",
     contact: "Contact",
     social: "Social",
+    delivery: "Delivery",
+    orderDelivery: "Order on Glovo",
     directions: "Get Directions",
     mapTitle: "Google Maps showing UMI on Rua de Cedofeita in Porto",
   },
@@ -85,9 +85,7 @@ const portuguese: typeof english = {
   homeLink: "Página inicial do UMI",
   booking: {
     action: "Reservar Mesa",
-    close: "Fechar reserva",
-    description: "Ligue para o UMI para reservar uma mesa e confirmar a disponibilidade.",
-    note: "As reservas online ainda não estão disponíveis.",
+    title: "Reservas no UMI",
   },
   hero: {
     cuisine: "Sushi e cozinha asiática",
@@ -117,6 +115,8 @@ const portuguese: typeof english = {
     hoursNote: "Ligue para confirmar o horário às quartas e quintas-feiras e nos feriados.",
     contact: "Contacto",
     social: "Redes Sociais",
+    delivery: "Entregas",
+    orderDelivery: "Pedir no Glovo",
     directions: "Como Chegar",
     mapTitle: "Mapa do Google com a localização do UMI na Rua de Cedofeita, no Porto",
   },

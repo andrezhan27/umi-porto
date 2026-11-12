@@ -1,5 +1,6 @@
 const address = "R. de Cedofeita 250";
 const postalAddress = "4050-174 Porto, Portugal";
+const deliveryUrl = "https://glovoapp.com/pt/pt/porto/stores/umi-opo";
 
 export const restaurant = {
   name: "UMI",
@@ -9,8 +10,9 @@ export const restaurant = {
   postalAddress,
   phone: "+351 22 099 0338",
   phoneHref: "tel:+351220990338",
-  bookingUrl: null as string | null,
-  menuUrl: "https://glovoapp.com/pt/pt/porto/stores/umi-opo",
+  bookingUrl: "https://reserve.intelis.pt/umi-porto",
+  deliveryUrl,
+  menuUrl: deliveryUrl,
   mapsUrl: "https://maps.app.goo.gl/Lt8YWTLfL8oYDWm98",
   directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=41.1510154%2C-8.6172561",
   mapEmbedUrl: "https://maps.google.com/maps?q=UMI%2C%20R.%20de%20Cedofeita%20250%2C%20Porto&z=16&output=embed",
