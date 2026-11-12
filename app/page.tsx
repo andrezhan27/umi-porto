@@ -10,6 +10,16 @@ function MenuLink({ children }: { children: React.ReactNode }) {
   return <a className="text-link" href={restaurant.menuUrl}>{children} <Icon name="arrow-up-right" size={15} /></a>;
 }
 
+function SocialLinks() {
+  return (
+    <div className="social-links">
+      {restaurant.socialLinks.map(({ icon, label, url }) => (
+        <a className="icon-button" key={url} href={url} aria-label={label}><Icon name={icon} /></a>
+      ))}
+    </div>
+  );
+}
+
 function Hero() {
   const { locale, copy: { hero } } = useLanguage();
   const { room } = spacePhotos;
@@ -121,13 +131,11 @@ function Visit() {
           <p>{visit.intro}</p>
           <dl className="visit-details">
             <div><dt><Icon name="pin" /> {visit.address}</dt><dd><a href={restaurant.directionsUrl}>{restaurant.address}<br />{restaurant.postalAddress} <Icon name="arrow-up-right" size={14} /></a></dd></div>
-            <div><dt><Icon name="clock" /> {visit.hours}</dt><dd>{restaurant.hours.map(({ days, times }) => <p key={days.en}><strong>{days[locale]}</strong><br />{times}</p>)}<p className="fine-print">{visit.hoursNote}</p></dd></div>
+            <div><dt><Icon name="clock" /> {visit.hours}</dt><dd>{restaurant.hours.map(({ days, times }) => <p key={days.en}><strong>{days[locale]}</strong><br />{times}</p>)}</dd></div>
             <div><dt><Icon name="phone" /> {visit.contact}</dt><dd><a href={restaurant.phoneHref}>{restaurant.phone}</a></dd></div>
-            <div>
+            <div className="visit-social">
               <dt><Icon name="at-sign" /> {visit.social}</dt>
-              <dd className="visit-social">
-                {restaurant.socialLinks.map(({ label, url }) => <a key={url} href={url}>{label} <Icon name="arrow-up-right" size={14} /></a>)}
-              </dd>
+              <dd><SocialLinks /></dd>
             </div>
             <div>
               <dt><Icon name="truck" /> {visit.delivery}</dt>
@@ -194,7 +202,8 @@ function Footer() {
             <ul>
               <li><a href={restaurant.directionsUrl}>{restaurant.address}<br />{restaurant.postalAddress}</a></li>
               <li><a href={restaurant.phoneHref}>{restaurant.phone}</a></li>
-              {[...restaurant.socialLinks, ...restaurant.legalLinks].map(({ label, url }) => <li key={url}><a href={url}>{label}</a></li>)}
+              <li><SocialLinks /></li>
+              {restaurant.legalLinks.map(({ label, url }) => <li key={url}><a href={url}>{label}</a></li>)}
             </ul>
           </div>
         </div>

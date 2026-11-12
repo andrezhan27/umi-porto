@@ -23,9 +23,9 @@ export const restaurant = {
   rating: { value: "4.8", count: 41, platform: "Google Maps" } as
     { value: string; count: number; platform: string } | null,
   socialLinks: [
-    { label: "Instagram", url: "https://www.instagram.com/restaurante.umi/" },
-    { label: "TikTok", url: "https://www.tiktok.com/@umi.restaurante2026" },
-  ],
+    { icon: "instagram", label: "Instagram", url: "https://www.instagram.com/restaurante.umi/" },
+    { icon: "tiktok", label: "TikTok", url: "https://www.tiktok.com/@umi.restaurante2026" },
+  ] as const,
   legalLinks: [] as { label: string; url: string }[],
 };
 

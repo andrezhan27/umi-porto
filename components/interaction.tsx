@@ -75,7 +75,7 @@ export function Header({ onReservationPage = false }: { onReservationPage?: bool
 
   useEffect(() => {
     if (!open) return;
-    const breakpoint = window.matchMedia("(min-width: 800px)");
+    const mobileLayout = window.matchMedia("(width < 800px), (max-width: 1000px) and (max-height: 500px)");
     const content = document.querySelectorAll<HTMLElement>("main, footer");
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -83,7 +83,7 @@ export function Header({ onReservationPage = false }: { onReservationPage?: bool
     firstLink.current?.focus();
 
     function closeOnResize(event: MediaQueryListEvent) {
-      if (event.matches) setOpen(false);
+      if (!event.matches) setOpen(false);
     }
 
     function closeOnEscape(event: globalThis.KeyboardEvent) {
@@ -93,12 +93,12 @@ export function Header({ onReservationPage = false }: { onReservationPage?: bool
       }
     }
 
-    breakpoint.addEventListener("change", closeOnResize);
+    mobileLayout.addEventListener("change", closeOnResize);
     window.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
       content.forEach((element) => { element.inert = false; });
-      breakpoint.removeEventListener("change", closeOnResize);
+      mobileLayout.removeEventListener("change", closeOnResize);
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [open]);
@@ -116,11 +116,12 @@ export function Header({ onReservationPage = false }: { onReservationPage?: bool
             <LanguageSwitch />
             {!onReservationPage && <BookingButton className="button-outline header-booking" />}
             <button ref={trigger} type="button" className="icon-button menu-toggle" aria-label={open ? copy.closeNavigation : copy.openNavigation} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)}>
-              <Icon name={open ? "close" : "menu"} size={25} />
+              <Icon name="menu" size={25} />
+              <Icon name="close" size={25} />
             </button>
           </div>
         </div>
-        <nav id="mobile-navigation" className="mobile-nav" hidden={!open} aria-label={copy.mainNavigation}>
+        <nav id="mobile-navigation" className="mobile-nav" inert={!open} aria-label={copy.mainNavigation}>
           <div className="shell mobile-nav-inner">
             <p className="eyebrow">{copy.exploreUmi}</p>
             <ol>
