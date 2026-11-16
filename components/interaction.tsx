@@ -106,7 +106,7 @@ export function Header({ onReservationPage = false }: { onReservationPage?: bool
   return (
     <>
       <a className="skip-link" href="#main">{copy.skip}</a>
-      <header className="site-header" data-scrolled={scrolled} data-menu-open={open}>
+      <header className="site-header" data-home={!onReservationPage} data-scrolled={scrolled} data-menu-open={open}>
         <div className="shell header-inner">
           <a href={sectionHref("home")} className="brand-link" aria-label={copy.homeLink} onClick={() => setOpen(false)}><Brand /></a>
           <nav className="desktop-nav" aria-label={copy.mainNavigation}>
